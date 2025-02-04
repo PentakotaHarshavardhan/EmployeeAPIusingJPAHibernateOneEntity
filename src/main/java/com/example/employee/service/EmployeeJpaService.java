@@ -39,19 +39,20 @@ public class EmployeeJpaService implements EmployeeRepository {
     }
 
     @Override
-    public Employee updateEmployee(Employee emp, int id) {
+    public Employee updateEmployee(Employee newEmp, int id) {
         try {
-            Employee newEmp = db.findById(id).get();
+            Employee existEmp = db.findById(id).get();
             if (newEmp.getName() != null) {
-                newEmp.setName(newEmp.getName());
+                existEmp.setName(newEmp.getName());
             }
             if (newEmp.getEmail() != null) {
-                newEmp.setName(newEmp.getEmail());
+                existEmp.setEmail(newEmp.getEmail());
             }
             if (newEmp.getDepartment() != null) {
-                newEmp.setDepartment(newEmp.getDepartment());
+                existEmp.setDepartment(newEmp.getDepartment());
             }
-            return db.save(newEmp);
+            return db.save(existEmp);
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
